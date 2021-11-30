@@ -1,64 +1,93 @@
 package com.example.androidnotesjava;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import androidx.fragment.app.Fragment;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ListNotesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.text.MessageFormat;
+
 public class ListNotesFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private Note currentNote;
+    public static String KEY_NOTE = "note";
+    boolean isLandScape;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public ListNotesFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ListNotesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ListNotesFragment newInstance(String param1, String param2) {
-        ListNotesFragment fragment = new ListNotesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static ListNotesFragment newInstance() {
+        return new ListNotesFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+        isLandScape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+
+        if (savedInstanceState != null) {
+            currentNote = savedInstanceState.getParcelable(KEY_NOTE);
         }
+        if (isLandScape)
+            if (currentNote != null) {
+                showNote(currentNote.getNumber());
+            } else {
+                showNote(0);
+            }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list_notes, container, false);
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(KEY_NOTE, currentNote);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_list_notes, container, false);
+        LinearLayout linearLayout = (LinearLayout) view;
+
+        String[] notes = getResources().getStringArray(R.array.names);
+
+        for (int i = 0; i < notes.length; i++) {
+            String note = notes[i];
+            TextView textView = new TextView(getContext());
+            String title = getResources().getString(R.string.title_note);
+            textView.setText(MessageFormat.format("{0}{1} {2}", title, i + 1, note));
+            textView.setTextSize(27);
+            linearLayout.addView(textView);
+            int finali = i;
+            textView.setOnClickListener(view1 -> showNote(finali));
+        }
+        return view;
+    }
+
+    private void showNote(int index) {
+        currentNote = new Note(index, (getResources().getStringArray(R.array.dates)[index]),
+                (getResources().getStringArray(R.array.names)[index]),
+                (getResources().getStringArray(R.array.description)[index]));
+        if (isLandScape) {
+            showNoteLand();
+        } else {
+            showNotePort();
+        }
+    }
+
+    private void showNoteLand() {
+        requireActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.note_container, NoteFragment.newInstance(currentNote))
+                .commit();
+    }
+
+    private void showNotePort() {
+        requireActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.list_notes_container, NoteFragment.newInstance(currentNote))
+                .addToBackStack("")
+                .commit();
     }
 }
