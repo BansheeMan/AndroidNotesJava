@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="names">
+        <item>Дни рождения родственников</item>
+        <item>Купить киберпанк</item>
+        <item>Список покупок</item>
+    </string-array>
+
+    <string-array name="description">
+        <item>всё равно ты их никогда не запомнишь, но можно попробовать(((</item>
+        <item>купишь когда закончишь учёбу и поменяешь работу, как раз его и допилят до ума) ну или Ведьмака 4 сделают хоть</item>
+        <item>на что хватит денег) и пивка</item>
+    </string-array>
+
+    <string-array name="dates">
+        <item>12.05.1988</item>
+        <item>03.11.2077</item>
+        <item>20.05.2021</item>
+    </string-array>
+</resources>
