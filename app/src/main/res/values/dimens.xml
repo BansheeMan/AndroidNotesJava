@@ -4,4 +4,6 @@
     <dimen name="text_size_description">25sp</dimen>
     <dimen name="text_size_name">30sp</dimen>
     <dimen name="text_size_date">20sp</dimen>
+    <dimen name="textSizeLabel">30sp</dimen>
+    <dimen name="header_height">200dp</dimen>
 </resources>
