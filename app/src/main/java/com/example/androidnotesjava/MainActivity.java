@@ -1,11 +1,7 @@
 package com.example.androidnotesjava;
 
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -22,16 +18,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        if (savedInstanceState == null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.list_notes_container, ListNotesFragment.newInstance())
-                    .commit();
+        if(savedInstanceState == null){
+            replaceFragment(R.id.list_notes_container, ListNotesFragment.newInstance());
         }
 
         initToolbar();
         initDrawer(initToolbar());
+    }
+
+    private void replaceFragment(int container, Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack("")
+                .replace(container, fragment).commit();
+    }
+
+    private void showDialogFragmentExit(){
+        new DialogFragmentExit().show(getSupportFragmentManager(), "DialogFragmentExit");
     }
 
     private Toolbar initToolbar() {
@@ -51,11 +54,11 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.action_drawer_about:
-                    openFavorite(FavoriteFragment.newInstance());
+                    replaceFragment(R.id.list_notes_container, FavoriteFragment.newInstance());
                     drawerLayout.closeDrawer(GravityCompat.START);
                     return true;
                 case R.id.action_drawer_exit:
-                    finish();
+                    showDialogFragmentExit();
                     return true;
             }
             return false;
@@ -70,12 +73,5 @@ public class MainActivity extends AppCompatActivity {
         if (backStackFragment != null && backStackFragment instanceof NoteFragment) {
             onBackPressed();
         }
-    }
-
-    private void openFavorite(Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .addToBackStack("")
-                .replace(R.id.list_notes_container, fragment).commit();
     }
 }
