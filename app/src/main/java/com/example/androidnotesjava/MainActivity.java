@@ -9,6 +9,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.androidnotesjava.ui.DialogFragmentExit;
+import com.example.androidnotesjava.ui.FavoriteFragment;
+import com.example.androidnotesjava.ui.ListNotesFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,9 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(savedInstanceState == null){
-            replaceFragment(R.id.list_notes_container, ListNotesFragment.newInstance());
-        }
+        replaceFragment(R.id.list_notes_container, ListNotesFragment.newInstance());
 
         initToolbar();
         initDrawer(initToolbar());
@@ -51,27 +52,21 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
-                case R.id.action_drawer_about:
+                case R.id.action_drawer_notes:
+                    replaceFragment(R.id.list_notes_container, ListNotesFragment.newInstance());
+                    break;
+                case R.id.action_drawer_favorite:
                     replaceFragment(R.id.list_notes_container, FavoriteFragment.newInstance());
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                    return true;
+                    break;
                 case R.id.action_drawer_exit:
                     showDialogFragmentExit();
-                    return true;
+                    break;
             }
+            drawerLayout.closeDrawer(GravityCompat.START);
             return false;
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Fragment backStackFragment = (Fragment) getSupportFragmentManager()
-                .findFragmentById(R.id.list_notes_container);
-        if (backStackFragment != null && backStackFragment instanceof NoteFragment) {
-            onBackPressed();
-        }
     }
 }

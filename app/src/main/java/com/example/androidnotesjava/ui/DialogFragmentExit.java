@@ -1,4 +1,4 @@
-package com.example.androidnotesjava;
+package com.example.androidnotesjava.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,23 +9,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.androidnotesjava.MainActivity;
+import com.example.androidnotesjava.R;
+
 public class DialogFragmentExit extends DialogFragment {
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         MainActivity activity = (MainActivity) requireActivity();
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder
+        return new AlertDialog.Builder(activity)
                 .setTitle("Выход")
                 .setIcon(R.mipmap.ic_launcher)
-                .setMessage("Вы уверены, что хотите выйти?")
-                .setPositiveButton("Да", (d, i) -> {
-                    Toast.makeText(activity, "Ваше приложение закрыто!", Toast.LENGTH_LONG).show();
+                .setMessage(R.string.exit_sure)
+                .setPositiveButton(R.string.yes, (d, i) -> {
+                    Toast.makeText(activity, R.string.app_is_closed, Toast.LENGTH_LONG).show();
                     activity.finish();
                 })
-                .setNeutralButton("Нет", null);
-        Dialog answer = builder.create();
-        return answer;
+                .setNeutralButton(R.string.no, null).create();
     }
 }

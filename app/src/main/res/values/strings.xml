@@ -13,4 +13,9 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="favorite_screen">Когда-нибудь здесь будут мои закладки, но сейчас здесь пусто, а я дома, а разработчики разрабатывают!!!</string>
+    <string name="exit_sure">Вы уверены, что хотите выйти?</string>
+    <string name="yes">Да</string>
+    <string name="app_is_closed">Ваше приложение закрыто!</string>
+    <string name="no">Нет</string>
+    <string name="notes">Notes</string>
 </resources>

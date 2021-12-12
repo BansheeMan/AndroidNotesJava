@@ -1,4 +1,4 @@
-package com.example.androidnotesjava;
+package com.example.androidnotesjava.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+
+import com.example.androidnotesjava.R;
 
 
 public class FavoriteFragment extends Fragment {

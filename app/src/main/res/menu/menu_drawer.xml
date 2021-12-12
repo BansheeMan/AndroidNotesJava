@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/action_drawer_about"
-        android:icon="@android:drawable/ic_menu_gallery"
+        android:id="@+id/action_drawer_notes"
+        android:icon="@android:drawable/sym_action_email"
+        android:title="@string/notes" />
+    <item
+        android:id="@+id/action_drawer_favorite"
+        android:icon="@android:drawable/btn_star_big_on"
         android:title="@string/favorite" />
     <item
         android:id="@+id/action_drawer_exit"
-        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:icon="@android:drawable/ic_delete"
         android:title="@string/exit" />
 </menu>
