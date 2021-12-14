@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import com.example.androidnotesjava.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class NotesSourceImp implements NotesSource {
@@ -17,13 +18,11 @@ public class NotesSourceImp implements NotesSource {
         this.resource = resource;
     }
 
-
     public NotesSourceImp init() {
-        String[] names = resource.getStringArray(R.array.names);
+        String[] titles = resource.getStringArray(R.array.titles);
         String[] descriptions = resource.getStringArray(R.array.description);
-        String[] dates = resource.getStringArray(R.array.dates);
         for (int i = 0; i < descriptions.length; i++){
-            dataSource.add(new Note(names[i], descriptions[i], dates[i]));
+            dataSource.add(new Note(titles[i], descriptions[i], Calendar.getInstance().getTime()));
         }
         return this;
     }
@@ -36,5 +35,25 @@ public class NotesSourceImp implements NotesSource {
     @Override
     public int size() {
         return dataSource.size();
+    }
+
+    @Override
+    public void deleteNote(int position) {
+        dataSource.remove(position);
+    }
+
+    @Override
+    public void updateNote(int position, Note newNote) {
+        dataSource.set(position, newNote);
+    }
+
+    @Override
+    public void addNote(Note newNote) {
+        dataSource.add(newNote);
+    }
+
+    @Override
+    public void clearNote() {
+        dataSource.clear();
     }
 }

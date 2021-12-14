@@ -11,4 +11,8 @@
     <color name="orange">#AEFF9800</color>
     <color name="pink">#E91E63</color>
     <color name="fon">#F44336</color>
+    <color name="colorPrimary">#FF000000</color>
+    <color name="colorPrimaryDark">#FF018786</color>
+    <color name="colorAccent">#F50057</color>
+    <color name="colorText">#1E0A4A</color>
 </resources>

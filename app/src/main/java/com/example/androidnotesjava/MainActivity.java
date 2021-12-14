@@ -1,37 +1,40 @@
 package com.example.androidnotesjava;
 
 import android.os.Bundle;
+import android.view.Menu;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import com.example.androidnotesjava.observe.Publisher;
 import com.example.androidnotesjava.ui.DialogFragmentExit;
 import com.example.androidnotesjava.ui.FavoriteFragment;
 import com.example.androidnotesjava.ui.ListNotesFragment;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
+
+    private Publisher publisher = new Publisher();
+    private Navigation navigation;
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        replaceFragment(R.id.list_notes_container, ListNotesFragment.newInstance());
+        navigation = new Navigation(getSupportFragmentManager());
 
         initToolbar();
         initDrawer(initToolbar());
-    }
-
-    private void replaceFragment(int container, Fragment fragment) {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .addToBackStack("")
-                .replace(container, fragment).commit();
+        navigation.addFragment(ListNotesFragment.newInstance(),false);
+        getSupportFragmentManager().addOnBackStackChangedListener(this);
     }
 
     private void showDialogFragmentExit(){
@@ -56,10 +59,10 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.action_drawer_notes:
-                    replaceFragment(R.id.list_notes_container, ListNotesFragment.newInstance());
+                    navigation.addFragment(ListNotesFragment.newInstance(),false);
                     break;
                 case R.id.action_drawer_favorite:
-                    replaceFragment(R.id.list_notes_container, FavoriteFragment.newInstance());
+                    navigation.addFragment(FavoriteFragment.newInstance(),false);
                     break;
                 case R.id.action_drawer_exit:
                     showDialogFragmentExit();
@@ -68,5 +71,30 @@ public class MainActivity extends AppCompatActivity {
             drawerLayout.closeDrawer(GravityCompat.START);
             return false;
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onBackStackChanged() {
+        if(getSupportFragmentManager().getBackStackEntryCount()>0){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }else{
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    public Navigation getNavigation() {
+        return navigation;
     }
 }
