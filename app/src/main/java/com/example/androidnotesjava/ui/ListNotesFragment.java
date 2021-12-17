@@ -25,7 +25,9 @@ import com.example.androidnotesjava.Navigation;
 import com.example.androidnotesjava.data.Note;
 import com.example.androidnotesjava.R;
 import com.example.androidnotesjava.data.NotesSource;
+import com.example.androidnotesjava.data.NotesSourceFirebaseImpl;
 import com.example.androidnotesjava.data.NotesSourceImp;
+import com.example.androidnotesjava.data.NotesSourceResponse;
 import com.example.androidnotesjava.observe.Observer;
 import com.example.androidnotesjava.observe.Publisher;
 
@@ -58,18 +60,19 @@ public class ListNotesFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        data = new NotesSourceImp(getResources()).init();
-    }
-
-    @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container,
                               Bundle savedInstanceState){
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_list_notes, container, false);
         recyclerView = view.findViewById(R.id.recycle_view_lines);
         initRecyclerView(recyclerView, data);
+        data = new NotesSourceFirebaseImpl().init(new NotesSourceResponse() {
+            @Override
+            public void initialized(NotesSource notesSource) {
+                adapter.notifyDataSetChanged();
+            }
+        });
+        adapter.setDataSource(data);
         return view;
     }
 
@@ -79,7 +82,7 @@ public class ListNotesFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new ListNotesAdapter(data, this);
+        adapter = new ListNotesAdapter(this);
         recyclerView.setAdapter(adapter);
         DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
         defaultItemAnimator.setAddDuration(2000);

@@ -25,9 +25,13 @@ public class ListNotesAdapter extends RecyclerView.Adapter<ListNotesAdapter.MyVi
         return menuContextClickPosition;
     }
 
-    public ListNotesAdapter(NotesSource dataSource, Fragment fragment) {
-        this.dataSource = dataSource;
+    public ListNotesAdapter(Fragment fragment) {
         this.fragment = fragment;
+    }
+
+    public void setDataSource(NotesSource dataSource){
+        this.dataSource = dataSource;
+        notifyDataSetChanged();
     }
 
     @NonNull

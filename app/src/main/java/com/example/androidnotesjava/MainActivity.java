@@ -1,5 +1,6 @@
 package com.example.androidnotesjava;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         navigation = new Navigation(getSupportFragmentManager());
 
         initToolbar();

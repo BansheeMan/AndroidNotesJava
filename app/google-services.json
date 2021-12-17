@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "407896374646",
+    "project_id": "androidnotesjava",
+    "storage_bucket": "androidnotesjava.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:407896374646:android:a81e8e7109106d91234e57",
+        "android_client_info": {
+          "package_name": "com.example.androidnotesjava"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "407896374646-b0da42f0inq4d21pv01m2bn4ptjs86r4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0m2bpdeO5H_jwd5m1hV76ijy2JnzeSok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "407896374646-b0da42f0inq4d21pv01m2bn4ptjs86r4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

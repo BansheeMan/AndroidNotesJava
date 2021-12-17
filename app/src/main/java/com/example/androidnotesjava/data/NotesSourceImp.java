@@ -18,12 +18,16 @@ public class NotesSourceImp implements NotesSource {
         this.resource = resource;
     }
 
-    public NotesSourceImp init() {
+    public NotesSource init(NotesSourceResponse notesSourceResponse) {
         String[] titles = resource.getStringArray(R.array.titles);
         String[] descriptions = resource.getStringArray(R.array.description);
         for (int i = 0; i < descriptions.length; i++){
             dataSource.add(new Note(titles[i], descriptions[i], Calendar.getInstance().getTime()));
         }
+        if (notesSourceResponse != null){
+            notesSourceResponse.initialized(this);
+        }
+
         return this;
     }
 

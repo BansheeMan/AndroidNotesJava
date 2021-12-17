@@ -2,6 +2,7 @@ package com.example.androidnotesjava.data;
 
 public interface NotesSource {
 
+    NotesSource init(NotesSourceResponse cardsSourceResponse);
     Note getNote(int position);
     int size();
 
