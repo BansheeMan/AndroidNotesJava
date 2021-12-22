@@ -21,7 +21,7 @@
             android:textSize="@dimen/text_size_date" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textView_name"
+            android:id="@+id/textView_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_name" />

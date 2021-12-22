@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidnotesjava.R;
@@ -17,8 +18,16 @@ public class ListNotesAdapter extends RecyclerView.Adapter<ListNotesAdapter.MyVi
     private NotesSource dataSource;
     private OnItemClickListener itemClickListener;
 
-    public ListNotesAdapter(NotesSource dataSource) {
+    private Fragment fragment;
+    private int menuContextClickPosition;
+
+    public int getMenuContextClickPosition() {
+        return menuContextClickPosition;
+    }
+
+    public ListNotesAdapter(NotesSource dataSource, Fragment fragment) {
         this.dataSource = dataSource;
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -48,18 +57,19 @@ public class ListNotesAdapter extends RecyclerView.Adapter<ListNotesAdapter.MyVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView name;
+        private TextView title;
         private TextView description;
         private TextView date;
 
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.textView_name);
+            title = itemView.findViewById(R.id.textView_title);
             description = itemView.findViewById(R.id.textView_description);
             date = itemView.findViewById(R.id.textView_date);
 
-            name.setOnClickListener(new View.OnClickListener() {
+            fragment.registerForContextMenu(title);
+            title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (itemClickListener != null) {
@@ -67,12 +77,20 @@ public class ListNotesAdapter extends RecyclerView.Adapter<ListNotesAdapter.MyVi
                     }
                 }
             });
+            title.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    menuContextClickPosition = getAdapterPosition();
+                    title.showContextMenu();
+                    return true;
+                }
+            });
         }
 
         public void setData(Note noteData) {
-            name.setText(noteData.getName());
+            title.setText(noteData.getTitle());
             description.setText(noteData.getDescription());
-            date.setText(noteData.getDate());
+            date.setText(noteData.getDate().toString());
         }
     }
 }

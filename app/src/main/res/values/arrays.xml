@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="names">
+    <string-array name="titles">
         <item>Дни рождения родственников</item>
         <item>Купить киберпанк</item>
         <item>Список покупок</item>
